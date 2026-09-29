@@ -1,6 +1,7 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
 
 import { envs } from './envs';
+import { decode } from 'punycode';
 
 const JWT_SEED = envs.JWT_SEED;
 
@@ -30,17 +31,14 @@ export class JwtAdapter {
 
   static validateToken(token: string) {
 
-    try {
+    return new Promise((resolve) => {
+      jwt.verify(token, JWT_SEED, (err, decoded) => {
 
-      const payload = jwt.verify(token, JWT_SEED);
+        if (err) return resolve(null)
 
-      return payload;
-
-    } catch (error) {
-
-      return null;
-
-    }
+        resolve(decoded)
+      })
+    })
 
   }
 

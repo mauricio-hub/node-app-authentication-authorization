@@ -38,23 +38,6 @@ export class CategoryService {
         }
 
     }
-    /*     async getCategories(){
-    
-            try {
-                const category = await CategoryModel.find();
-    
-                return category.map(category => ({
-                    id: category.id,
-                    name: category.name,
-                    available: category.available,
-                }));
-    
-            } catch (error) {
-                throw CustomError.internalSever(`${error}`);
-            }
-        } */
-
-
 
     async getCategories(paginationDto: PaginationDto) {
 
@@ -63,10 +46,6 @@ export class CategoryService {
 
         try {
 
-            // const total = await CategoryModel.countDocuments();
-            // const categories = await CategoryModel.find()
-            //   .skip( (page - 1) * limit )
-            //   .limit( limit )
             const [total, categories] = await Promise.all([
                 CategoryModel.countDocuments(),
                 CategoryModel.find()
@@ -89,17 +68,11 @@ export class CategoryService {
                 }))
             };
 
-
         } catch (error) {
             throw CustomError.internalSever('Internal Server Error');
         }
 
-
-
-
     }
-
-
 
 
 }
